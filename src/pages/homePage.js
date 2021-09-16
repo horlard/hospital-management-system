@@ -2,12 +2,12 @@ import React from 'react';
 import RouterCard from '../components/routerCard';
 
 
-const Appointments=()=> {
+const Home=()=> {
     return (
         <div>
-            <RouterCard title='Appointments'/>
+            <RouterCard title='Home'/>
         </div>
     )
 }
 
-export default Appointments;
+export default Home;

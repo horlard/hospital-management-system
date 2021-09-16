@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 
-const RouterCard = ()=> {
+const RouterCard = ({ title })=> {
     const Container = styled.div`
         width: 50%;
         background: #fff;
@@ -15,7 +15,7 @@ const RouterCard = ()=> {
     `
     return (
         <Container>
-            <H3>Home</H3>
+            <H3>{title}</H3>
         </Container>
     )
 }

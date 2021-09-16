@@ -1,10 +1,13 @@
 import React from 'react';
+import RouterCard from '../components/routerCard';
 
 
-const Appointments=()=> {
+const Doctors=()=> {
     return (
-        <div>Appointment</div>
+        <div>
+            <RouterCard title='Doctors'/>
+        </div>
     )
 }
 
-export default Appointments;
+export default Doctors;
