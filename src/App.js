@@ -1,6 +1,9 @@
 import React from 'react';
 import Header from './components/Header'
-import RouterCard from './components/routerCard'
+import Patients from './pages/patientsPage'
+import Doctors from './pages/doctorsPage'
+import Appointments from './pages/appointmentsPage'
+import Home from './pages/homePage'
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,12 +14,19 @@ function App() {
   return (
     <Router>
       <Header/>
-      <RouterCard/>
       <Switch>
-        <Route path='/' exact>Home</Route>
-        <Route path='/patients'>Patients</Route>
-        <Route path='/doctors'>Doctors</Route>
-        <Route path='/appointments'>Appointments</Route>
+        <Route path='/' exact>
+          <Home/>
+        </Route>
+        <Route path='/patients'>
+          <Patients/>
+        </Route>
+        <Route path='/doctors'>
+          <Doctors/>
+        </Route>
+        <Route path='/appointments'>
+          <Appointments/>
+        </Route>
       </Switch>
     </Router>
   );
