@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import CardFilters from '../components/cardFilter'
+
 
 
 const Card = (props) => {
