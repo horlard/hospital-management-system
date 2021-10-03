@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import CardFilters from '../components/cardFilter'
 
 
-const Card = () => {
+const Card = (props) => {
     const Container= styled.div`
         width: 65%;
         background: #fff;
@@ -15,7 +15,7 @@ const Card = () => {
 
     return (
         <Container>
-            <CardFilters/>
+            {props.children}
         </Container>
     )
 }

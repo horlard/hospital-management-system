@@ -35,7 +35,7 @@ const RouterCard = ({ title })=> {
         <appContext.Consumer>
             {
                 context=> (
-                  <P onClick={()=>context.openModal(<ModalForm/>)}>
+                  <P onClick={()=>context.openModal(<ModalForm title={title} close={context.closeModal}/>)}>
                     {
                         title === 'Appointments' ? 'Book' : 'Add'
                     }

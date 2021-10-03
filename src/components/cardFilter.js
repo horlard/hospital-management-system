@@ -65,7 +65,11 @@ const CardFilters =(props)=> {
             text-align:left;
         }
 
-        &>td:nth-child(6) {
+        
+    
+    `
+
+    const EditBtn = styled.td`
              border: 1px solid #3f00ff70;
              border-radius: 3px;
              background:#3f00ff70;
@@ -73,16 +77,17 @@ const CardFilters =(props)=> {
              margin-right:5%;
              cursor:pointer;
              padding: 8px 24px 8px 26px;
-        }
+    
+    
+    `
 
-        &>td:nth-child(7) {
+    const DeleteBtn = styled.td`
              border: 1px solid #ff0000b8;
              border-radius: 3px;
              background:#ff0000b8;
              color:#fff;
              cursor:pointer;
              padding: 8px 24px 8px 26px;
-        }
     
     `
 
@@ -90,6 +95,65 @@ const CardFilters =(props)=> {
         padding: 2% 0 5% 0;
     
     `
+    console.log(props);
+
+    const RecordList=()=> {
+        if(props.title==='Patients') {
+            return props.Patients.map(Patient=> {
+                return (
+                    <Tr>
+                        <td>{Patient.firstName}</td>
+                        <td>{Patient.lastName}</td>
+                        <td>{Patient.insurance}</td>
+                        <td>{Patient.address}</td>
+                        <td>{Patient.phone}</td>
+                        <EditBtn>Edit</EditBtn>
+                        <DeleteBtn>Delete</DeleteBtn>
+                    </Tr>
+                )
+            })
+        } else if (props.title==='Doctors') {
+            return props.Doctors.map(Doctor=> {
+                return (
+                    <Tr>
+                        <td>{Doctor.firstName}</td>
+                        <td>{Doctor.lastName}</td>
+                        <td>{Doctor.address}</td>
+                        <td>{Doctor.phone}</td>
+                        <EditBtn>Edit</EditBtn>
+                        <DeleteBtn>Delete</DeleteBtn>
+                    </Tr>
+                )
+            })
+        }
+    }
+
+
+    const TableHeader = () => {
+         if(props.Patients.length === 0 && props.Doctors.length === 0 ) {
+                return (
+                    <></>
+                )
+            } else {
+                return (
+                    <Div>
+                    <table>
+                        <Tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            {
+                                props.title==='Patients' ? <th>Insurance</th> : <></>
+                            }   
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                        </Tr>
+                            {RecordList()}
+                    </table>
+                    </Div>
+                )
+            }
+    }
+    
     return (
         <>
         <Wrapper>
@@ -108,32 +172,9 @@ const CardFilters =(props)=> {
             </Search>
             
         </Wrapper>
-        <Div>
-        <table>
-        <Tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Insurance</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-        </Tr>
-        {
-            props.Patients.map(Patient=> {
-                return (
-                    <Tr>
-                        <td>{Patient.FirstName}</td>
-                        <td>{Patient.LastName}</td>
-                        <td>{Patient.Insurance}</td>
-                        <td>{Patient.Address}</td>
-                        <td>{Patient.PhoneNumber}</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
-                    </Tr>
-                )
-            })
-        }
-        </table>
-        </Div>
+            {
+                TableHeader()
+            }
         
         </>
     )
@@ -141,7 +182,8 @@ const CardFilters =(props)=> {
 
 const mapStateToProps=state=> {
     return {
-        Patients: state.Patients
+        Patients: state.Patients,
+        Doctors: state.Doctors
     }
 }
 

@@ -1,34 +1,18 @@
-const PatientsReducer = () => {
-    return [
-        {
-            FirstName: 'Saulih',
-            LastName:'Bisiriyu',
-            Insurance:'300000',
-            Address:'2,ilesanmi Avenue',
-            PhoneNumber: '08163909241'
-        },
-        {
-            FirstName: 'Saulih',
-            LastName:'Bisiriyu',
-            Insurance:'300000',
-            Address:'2,ilesanmi Avenue',
-            PhoneNumber: '08163909241'
-        },
-        {
-            FirstName: 'Saulih',
-            LastName:'Bisiriyu',
-            Insurance:'300000',
-            Address:'2,ilesanmi Avenue',
-            PhoneNumber: '08163909241'
-        },
-        {
-            FirstName: 'Saulih',
-            LastName:'Bisiriyu',
-            Insurance:'300000',
-            Address:'2,ilesanmi Avenue',
-            PhoneNumber: '08163909241'
-        }
-    ]
+
+const PatientsReducer = (state=[],action) => {
+    switch(action.type) {
+        case 'ADD_PATIENT': 
+            return [...state,action.payload]
+        default :
+            return state
+
+    }
 }
 
 export default PatientsReducer;
+
+
+
+
+
+

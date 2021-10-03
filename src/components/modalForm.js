@@ -1,9 +1,16 @@
 import React from 'react';
 import styled from 'styled-components'
+import { v4 as uuidv4 } from 'uuid';
 import {appContext} from '../App'
+import {connect} from 'react-redux'
+import {addPatient} from '../actions'
+import {addDoctor} from '../actions'
 
-const ModalForm =()=> {
-    const Container = styled.div`
+
+
+
+
+const Container = styled.div`
         
     `
     const Header= styled.div`
@@ -76,53 +83,142 @@ const ModalForm =()=> {
         }
     
     `
+    
+    
+class ModalForm extends React.Component {
 
+    state={
+        firstName : '',
+        lastName : '',
+        insurance : '',
+        phoneNo : '',
+        address : '',
+        formValues : {}
+    }
 
+    onSubmitHandler=()=> {
+        
+        this.setState((state)=> ({
+            formValues: {firstName:state.firstName,lastName:state.lastName,insurance:state.insurance,phone:state.phoneNo,address: state.address, id:uuidv4()}
+        }),()=> {
+            if (this.props.title==='Patients') {
+                this.props.addPatient(this.state.formValues)
+                this.props.close()
+            }else if (this.props.title==='Doctors') {
+                this.props.addDoctor(this.state.formValues)
+                this.props.close()
+            }
+            
 
+        })
+    }
 
+    firstNameHandler=(e)=> {
+        this.setState({firstName : e.target.value})
 
+    }
+
+    lastNameHandler=(e)=> {
+        this.setState({lastName : e.target.value})
+    }
+
+    insuranceHandler=(e)=> {
+        this.setState({insurance : e.target.value})
+    }
+
+    phoneHandler=(e)=> {
+        this.setState({phoneNo : e.target.value})
+    }
+
+    addressHandler=(e)=> {
+        this.setState({address : e.target.value})
+    }
+
+    formHandler=(e)=> {
+        this.setState({[e.target.name]:e.target.value})
+    }
+
+    
+
+render() {
+    const {title} = this.props;
     return (
         <Container>
-            <Header>
-                <h3>Patients</h3>
-                <appContext.Consumer>
-                    {
-                        Context=> (
-                            <span onClick={()=> Context.closeModal()}>x</span>
-                        )
-                    }
-                </appContext.Consumer>
-                
-            </Header>
-        <form>
-            <InputFields>
-                <label htmlFor="first">First Name :</label>
-                <input type="text" id='first' required/>
-            </InputFields>
-            <InputFields>
-                <label htmlFor="last">Last Name :</label>
-                <input type="text" id='last'/>
-            </InputFields>
-            <InputFields>
-                <label htmlFor="insurance">Insurance No :</label>
-                <input type="text" id='insurance'/>
-            </InputFields>
-            <InputFields>
-                <label htmlFor="phone">Phone Number :</label>
-                <input type="text" id='phone'/>
-            </InputFields>
-            <InputFields>
-                <label htmlFor="address">Address :</label>
-                <textarea id='address'/>
-            </InputFields>
-            <FormBtns>
-                <span>Close</span>
-                <span>Save Changes</span>
-            </FormBtns>
-        </form>
+            <appContext.Consumer>
+                {
+                    Context=> (
+                        <>
+                        <Header>
+                            <h3>{title}</h3>
+                            <span onClick={()=>Context.closeModal()}>x</span>
+                        </Header>
+                        <InputFields>
+                            <label htmlFor="first">First Name :</label>
+                            <input 
+                            type="text" 
+                            id='first' 
+                            name='firstName' 
+                             
+                            onChange={this.firstNameHandler}
+                            />
+                        </InputFields>
+                        <InputFields>
+                            <label htmlFor="last">Last Name :</label>
+                            <input 
+                            type="text" 
+                            id='last'
+                            name='lastName' 
+                             
+                            onChange={this.lastNameHandler} 
+                            />
+                        </InputFields>
+                        {
+                            title==='Patients' ? <InputFields>
+                                                    <label htmlFor="insurance">Insurance No :</label>
+                                                    <input 
+                                                    type="text" 
+                                                    id='insurance'
+                                                    name='insurance' 
+                        
+                                                    onChange={this.insuranceHandler} 
+                                                    />
+                                                 </InputFields> : <></>
+                        }
+                        <InputFields>
+                            <label htmlFor="phone">Phone Number :</label>
+                            <input 
+                            type="text" 
+                            id='phone'
+                            name='phoneNo' 
+                             
+                            onChange={this.phoneHandler}
+                            />
+                        </InputFields>
+                        <InputFields>
+                            <label htmlFor="address">Address :</label>
+                            <textarea 
+                            id='address'
+                            name='address' 
+                            onChange={this.addressHandler}
+                            />
+                        </InputFields>
+                        <FormBtns>
+                            <span onClick={()=> Context.closeModal()}>Close</span>
+                            <span onClick={()=>{
+                                this.onSubmitHandler()
+                                
+                            }}>Save Changes</span>
+                        </FormBtns>
+                        </>
+                    )
+}
+            </appContext.Consumer>
         </Container>
         
     )
 }
+}
 
-export default ModalForm;
+
+
+export default connect(null,{addPatient,addDoctor})(ModalForm);

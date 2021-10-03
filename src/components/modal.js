@@ -64,7 +64,6 @@ const Modal = (props) => {
         border-radius: 6px;
         animation: ${Bounce};
         animation-duration: 1000ms;
-        
     `
 
     return ReactDOM.createPortal(
