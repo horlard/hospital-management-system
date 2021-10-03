@@ -28,18 +28,10 @@ function App() {
       {showModal ? <Modal>{modalComponent}</Modal> : <></>}
       <Header/>
       <Switch>
-        <Route path='/' exact>
-          <Home/>
-        </Route>
-        <Route path='/patients'>
-          <Patients/>
-        </Route>
-        <Route path='/doctors'>
-          <Doctors/>
-        </Route>
-        <Route path='/appointments'>
-          <Appointments/>
-        </Route>
+        <Route path='/' exact component={Home}/>
+        <Route path='/patients' component={Patients} />
+        <Route path='/doctors' component={Doctors} />
+        <Route path='/appointments' component={Appointments} />
       </Switch>
     </appContext.Provider>
     </Router>
