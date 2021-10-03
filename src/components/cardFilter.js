@@ -172,10 +172,7 @@ const CardFilters =(props)=> {
             </Search>
             
         </Wrapper>
-            {
-                TableHeader()
-            }
-        
+            {TableHeader()}
         </>
     )
 }
