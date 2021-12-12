@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import {appContext} from '../App'
 import ModalForm from './modalForm'
+import AppointmentForm from '../components/appointmentForm'
 
 
 const RouterCard = ({ title })=> {
@@ -29,13 +30,22 @@ const RouterCard = ({ title })=> {
         cursor:pointer;
     
     `
+
+
+    const ModalRender = (context) => {
+        if(title==='Appointments') {
+            return <AppointmentForm close={context.closeModal}/>
+        }else {
+            return <ModalForm title={title} close={context.closeModal}/>
+        }
+    }
     return (
         <Container>
             <H3>{title}</H3>
         <appContext.Consumer>
             {
                 context=> (
-                  <P onClick={()=>context.openModal(<ModalForm title={title} close={context.closeModal}/>)}>
+                  <P onClick={()=>context.openModal(ModalRender(context))}>
                     {
                         title === 'Appointments' ? 'Book' : 'Add'
                     }

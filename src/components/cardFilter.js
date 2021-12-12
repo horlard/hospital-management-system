@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{useState} from 'react';
 
 import styled from 'styled-components'
 import {connect} from 'react-redux';
+import {deletePatient} from '../actions'
 
 
 const CardFilters =(props)=> {
@@ -98,17 +99,26 @@ const CardFilters =(props)=> {
     console.log(props);
 
     const RecordList=()=> {
+        const [Show,setShow] = useState(false)
+        
         if(props.title==='Patients') {
-            return props.Patients.map(Patient=> {
+            const deletePatient=(i)=> {
+                props.Patients.splice(i,1)
+                const show= Show
+                setShow(true)
+                console.log(show)
+                
+            }
+            return props.Patients.map((Patient,i)=> {
                 return (
                     <Tr>
-                        <td>{Patient.firstName}</td>
-                        <td>{Patient.lastName}</td>
-                        <td>{Patient.insurance}</td>
-                        <td>{Patient.address}</td>
-                        <td>{Patient.phone}</td>
-                        <EditBtn>Edit</EditBtn>
-                        <DeleteBtn>Delete</DeleteBtn>
+                        <td key={i}>{Patient.firstName}</td>
+                        <td key={i}>{Patient.lastName}</td>
+                        <td key={i}>{Patient.insurance}</td>
+                        <td key={i}>{Patient.address}</td>
+                        <td key={i}>{Patient.phone}</td>
+                        <EditBtn key={i}>Edit</EditBtn>
+                        <DeleteBtn key={i} onClick={()=>deletePatient(i)}>Delete</DeleteBtn>
                     </Tr>
                 )
             })
@@ -125,12 +135,23 @@ const CardFilters =(props)=> {
                     </Tr>
                 )
             })
+        } else {
+            return props.Appointments.map(appointment=> {
+                return (
+                    <Tr>
+                        <td>{appointment.doctor}</td>
+                        <td>{appointment.patient}</td>
+                        <td>{appointment.date} / {appointment.time}</td>
+                        <DeleteBtn>Delete</DeleteBtn>
+                    </Tr>
+                )
+            })
         }
     }
 
 
     const TableHeader = () => {
-         if(props.Patients.length === 0 && props.Doctors.length === 0 ) {
+         if(props.Patients.length === 0 && props.Doctors.length === 0 && props.Appointments.length === 0 ) {
                 return (
                     <></>
                 )
@@ -139,13 +160,25 @@ const CardFilters =(props)=> {
                     <Div>
                     <table>
                         <Tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            {
+                                props.title === 'Appointments' ? <th>Doctor Name</th> : <th>First Name</th>
+                            }
+                            {
+                                props.title === 'Appointments' ? <th>Patient Name</th> : <th>Last Name</th>
+                            }
+                            {
+                                props.title==='Appointments' ? <th>Appointment Date</th> : <></>
+                            }
                             {
                                 props.title==='Patients' ? <th>Insurance</th> : <></>
+                            }
+                            {
+                                props.title==='Appointments' ? <></> : <>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                </>
                             }   
-                            <th>Address</th>
-                            <th>Phone Number</th>
+                            
                         </Tr>
                             {RecordList()}
                     </table>
@@ -180,8 +213,9 @@ const CardFilters =(props)=> {
 const mapStateToProps=state=> {
     return {
         Patients: state.Patients,
-        Doctors: state.Doctors
+        Doctors: state.Doctors,
+        Appointments : state.Appointments
     }
 }
 
-export default connect(mapStateToProps)(CardFilters);
+export default connect(mapStateToProps,{deletePatient})(CardFilters);
